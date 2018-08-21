@@ -13,9 +13,10 @@ class NewVisitorTest(unittest.TestCase):
         # JJ accesses the new To-Do list website
         self.browser.get('http://localhost:8000')
         # JJ sees the homepage, and confirms it's the site she wanted
-        assert 'To-Do' in self.browser.title
+        self.assertIn('To-Do', self.browser.title)
 
         # JJ can enter a new to-do item straight from the main homepage
+        self.fail('TODO: Finish Test')
         # JJ creates a new to-do item
         # The page updates and JJ now sees a new list with her first to-do
         # JJ can still add more items
