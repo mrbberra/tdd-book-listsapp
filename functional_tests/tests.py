@@ -53,7 +53,35 @@ class NewVisitorTest(LiveServerTestCase):
         # The second item appears once the page updates, and the first remains
         self.wait_for_row_in_table('1: Measure bed dimensions')
         self.wait_for_row_in_table('2: Go to home depot')
-        # JJ doesn't know how to access the list again from her other computer
-        # She sees a new URL has been generated, and the site explains it
+
+    def test_should_allow_multiple_users_with_different_urls(self):
+        # JJ starts a new to-do lists
+        self.browser.get(self.live_server_url)
+        input_box = self.browser.find_element_by_id('id_new_item')
+        input_box.send_keys('Measure bed dimensions')
+        input_box.send_keys(Keys.ENTER)
+        self.wait_for_row_in_table('1: Measure bed dimensions')
+        # JJ sees that her new list has a unique url
+        jj_list_url = self.browser.current_url
+        self.assertRegex(jj_list_url, '/lists/.+')
+        # Now Benji opens the site from his computer
+        self.browser.quit()
+        self.browser = webdriver.Firefox()
+        # Benji arrives at the home page and sees none of JJ's items
+        self.browser.get(self.live_server_url)
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Measure bed dimensions', page_text)
+        # Benji starts a list of his own by adding an item from the home page
+        input_box = self.browser.find_element_by_id('id_new_item')
+        input_box.send_keys('Find tailoring patterns')
+        input_box.send_keys(Keys.ENTER)
+        self.wait_for_row_in_table('1: Find tailoring patterns')
+        # Benji gets his own unique url
+        benji_list_url = self.browser.current_url
+        self.assertRegex(benji_list_url, '/lists/.+')
+        self.assertNotEqual(jj_list_url, benji_list_url)
+        # On Benji's list's url, none of JJ's items show up
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Measure bed dimensions', page_text)
+        self.assertIn('Find tailoring patterns', page.text)
         self.fail('TODO: Finish Test')
-        # JJ accesses the unique URL from her second computer and sees her items
