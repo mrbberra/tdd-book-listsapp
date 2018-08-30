@@ -49,6 +49,10 @@ class ItemModelTest(TestCase):
 
 class ListViewTest(TestCase):
 
+    def test_should_use_list_template(self):
+        response = self.client.get('/lists/only-list-that-exists/')
+        self.assertTemplateUsed(response, 'list.html')
+
     def test_should_display_all_items(self):
         Item.objects.create(text="First item")
         Item.objects.create(text="Second item")
