@@ -83,5 +83,4 @@ class NewVisitorTest(LiveServerTestCase):
         # On Benji's list's url, none of JJ's items show up
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Measure bed dimensions', page_text)
-        self.assertIn('Find tailoring patterns', page.text)
-        self.fail('TODO: Finish Test')
+        self.assertIn('Find tailoring patterns', page_text)
