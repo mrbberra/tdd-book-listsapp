@@ -84,3 +84,15 @@ class NewVisitorTest(LiveServerTestCase):
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Measure bed dimensions', page_text)
         self.assertIn('Find tailoring patterns', page_text)
+
+    def test_should_load_layout_and_styling(self):
+        # JJ navigates to the homepage
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024,768)
+        # She sees the input box is centered
+        input_box = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            input_box.location['x'] + input_box.size['width'] / 2,
+            512,
+            delta=10
+        )
