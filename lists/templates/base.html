@@ -1,14 +1,40 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/static/base.css">
+
     <title>To-Do lists</title>
   </head>
   <body>
-    <h1>{% block header_text %}{% endblock %}</h1>
-    <form method="POST" action="{% block form_action %}{% endblock %}">
-      <input name="item_text" id="id_new_item" placeholder="Enter a to-do item"/>
-      {% csrf_token %}
-    </form>
-    {% block table %}
-    {% endblock %}
+    <div class="container">
+
+      <div class="row justify-content-center jumbotron">
+        <div class="col-md-auto text-center">
+          <h1>{% block header_text %}{% endblock %}</h1>
+          <form method="POST" action="{% block form_action %}{% endblock %}">
+            <input name="item_text"
+                   id="id_new_item"
+                   placeholder="Enter a to-do item"
+                   class="form-control input-lg"/>
+            {% csrf_token %}
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 offset-md-2">
+          {% block table %}
+          {% endblock %}
+        </div>
+      </div>
+
+    </div>
   </body>
 </html>
