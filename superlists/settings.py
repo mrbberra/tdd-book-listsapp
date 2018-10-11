@@ -16,14 +16,14 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-if 'DJANGO_DEBUG_FALSE' in os.environ:
-    SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
-    DEBUG = False
-    ALLOWED_HOSTS = ['DJANGO_ALLOWED_HOSTS']
-else:
+if 'DJANGO_DEBUG_TRUE' in os.environ:
     SECRET_KEY = '5#87-@3)d0uoa4j6=-0xjsqxdzy6+15(y8rsv9(q2r=a7n7yem'
     DEBUG = False
     ALLOWED_HOSTS = ['*']
+else:
+    SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+    DEBUG = False
+    ALLOWED_HOSTS = ['DJANGO_ALLOWED_HOSTS']
 
 # Application definition
 
