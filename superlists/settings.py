@@ -23,7 +23,7 @@ if 'DJANGO_DEBUG_TRUE' in os.environ:
 else:
     SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
     DEBUG = False
-    ALLOWED_HOSTS = ['DJANGO_ALLOWED_HOSTS']
+    ALLOWED_HOSTS = os.environ[os.environ['SITENAME']]
 
 # Application definition
 
