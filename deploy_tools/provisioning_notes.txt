@@ -1,0 +1,41 @@
+New Site Provisioning
+"""""""""""""""""""""
+
+## Required pckgs:
+
+* nginx
+* python 3.6
+* virtualenv + pip
+* Git
+
+eg (Ubuntu)
+    sudo add-apt-repository ppa:reponame/ppa
+    sudo apt update
+    sudo apt install nginx git python36 python3.6-env
+
+## Nginx virtual host
+
+* see nginx.template.conf
+* replace DOMAIN with site name
+
+## Systemd service
+
+* see gunicorn-systemd.template.system
+* replace DOMAIN with site name
+
+## Folder structure
+
+* assuming we have a user home directory
+
+/home/username
+|-- sites
+    |-- DOMAIN1
+    |   |-- .env
+    |   |-- db.sqlite3
+    |   |-- manage.py [...]
+    |   |-- static
+    |   |-- virtualenv
+    |-- DOMAIN2
+    |   |-- .env
+    |   |-- [...]
+    |-- [...]
