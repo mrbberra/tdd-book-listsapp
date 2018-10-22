@@ -9,7 +9,7 @@ def _get_latest_source():
         run('git fetch')
     else:
         run('git clone {REPO_URL} .')
-    current_commit = local('git log -n 1 --format=%H'), capture=True)
+    current_commit = local('git log -n 1 --format=%H', capture=True)
     run(f'git reset --hard {current_commit}')
 
 def _update_virtualenv():
@@ -19,11 +19,12 @@ def _update_virtualenv():
 
 def _create_or_update_dotenv():
     append('.env', f'SITENAME={env.host}')
+    append('.env', f'unset DJANGO_DEBUG_TRUE')
     current_contents = run('cat .env')
-    if 'DJANGO_SECRET_KEY' not in current_contents:
+    if 'export DJANGO_SECRET_KEY' not in current_contents:
         new_secret = ''.join(random.SystemRandom().choices(
             'abcdefghijklmnopqrstuvwxyz0123456789', k=50))
-    append('.env', f'DJANGO_SECRET_KEY={new_secret}')
+        append('.env', f'export DJANGO_SECRET_KEY={new_secret}')
 
 def _update_static_files():
     run('./virtualenv/bin/python manage.py collectstatic --noinput')
@@ -32,7 +33,7 @@ def _update_database():
     run('./virtualenv/bin/python manage.py migrate --noinput')
 
 def deploy():
-    site_folder= = f'/home/{env_user}/sites/{env.host}'
+    site_folder = f'/home/{env.user}/sites/{env.host}'
     run(f'mkdir -p {site_folder}')
     with cd(site_folder):
         _get_latest_source()
