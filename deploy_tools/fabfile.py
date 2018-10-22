@@ -18,13 +18,14 @@ def _update_virtualenv():
     run('./virtualenv/bin/pip install -r requirements.txt')
 
 def _create_or_update_dotenv():
-    append('.env', f'SITENAME={env.host}')
+    append('.env', f'export SITENAME={env.host}')
     append('.env', f'unset DJANGO_DEBUG_TRUE')
     current_contents = run('cat .env')
     if 'export DJANGO_SECRET_KEY' not in current_contents:
         new_secret = ''.join(random.SystemRandom().choices(
             'abcdefghijklmnopqrstuvwxyz0123456789', k=50))
         append('.env', f'export DJANGO_SECRET_KEY={new_secret}')
+    run('set -a; source .env; set +a')
 
 def _update_static_files():
     run('./virtualenv/bin/python manage.py collectstatic --noinput')
