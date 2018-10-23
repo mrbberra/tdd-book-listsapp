@@ -19,7 +19,7 @@ def _update_virtualenv():
 
 def _create_or_update_dotenv():
     append('.env', f'export SITENAME={env.host}')
-    append('.env', f'unset DJANGO_DEBUG_TRUE')
+    append('.env', f'export DJANGO_DEBUG_FALSE')
     current_contents = run('cat .env')
     if 'export DJANGO_SECRET_KEY' not in current_contents:
         new_secret = ''.join(random.SystemRandom().choices(
