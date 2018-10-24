@@ -2,7 +2,7 @@ import random
 from fabric.contrib.files import append, exists
 from fabric.api import cd, env, local, run
 
-REPO_URL = 'https://github.com/mrbberra/python-tdd-book.git'
+REPO_URL = 'https://github.com/mrbberra/tdd-book-listsapp.git'
 
 def _get_latest_source():
     if exists('.git'):
