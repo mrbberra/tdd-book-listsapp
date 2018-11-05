@@ -4,11 +4,14 @@ from fabric.api import cd, env, local, run
 
 REPO_URL = 'https://github.com/mrbberra/tdd-book-listsapp.git'
 
+def _add_python_path():
+    run('export PATH=$HOME/opt/python-3.6.2/bin:$PATH')
+
 def _get_latest_source():
     if exists('.git'):
         run('git fetch')
     else:
-        run('git clone {REPO_URL} .')
+        run(f'git clone {REPO_URL} .')
     current_commit = local('git log -n 1 --format=%H', capture=True)
     run(f'git reset --hard {current_commit}')
 
@@ -37,6 +40,7 @@ def deploy():
     site_folder = f'/home/{env.user}/sites/{env.host}'
     run(f'mkdir -p {site_folder}')
     with cd(site_folder):
+        _add_python_path()
         _get_latest_source()
         _update_virtualenv()
         _create_or_update_dotenv()
