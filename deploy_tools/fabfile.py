@@ -4,9 +4,6 @@ from fabric.api import cd, env, local, run
 
 REPO_URL = 'https://github.com/mrbberra/tdd-book-listsapp.git'
 
-def _add_python_path():
-    run('export PATH=$HOME/opt/python-3.6.2/bin:$PATH')
-
 def _get_latest_source():
     if exists('.git'):
         run('git fetch')
@@ -17,7 +14,7 @@ def _get_latest_source():
 
 def _update_virtualenv():
     if not exists('virtualenv/bin/pip'):
-        run(f'python3.6 -m venv virtualenv')
+        run(f'virtualenv --python=python3.6 virtualenv')
     run('./virtualenv/bin/pip install -r requirements.txt')
 
 def _create_or_update_dotenv():
@@ -40,7 +37,6 @@ def deploy():
     site_folder = f'/home/{env.user}/sites/{env.host}'
     run(f'mkdir -p {site_folder}')
     with cd(site_folder):
-        _add_python_path()
         _get_latest_source()
         _update_virtualenv()
         _create_or_update_dotenv()

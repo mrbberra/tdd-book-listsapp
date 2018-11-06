@@ -3,3 +3,6 @@ geckodriver.log
 __pycache__
 *.pyc
 .env
+virtualenv
+superlists/bin/
+superlists/pyvenv.cfg
